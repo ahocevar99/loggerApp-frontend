@@ -84,17 +84,17 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
         <p>Pošiljanje izpisov na API mora biti v tem formatu: </p>
         <pre style={{fontSize:"1rem"}}>
           <code>
-            {`const res = await fetch("http://localhost:3000/api/log", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  apiKey,
-                  message,
-                  severity_level: severity,
-                }),
-              });`}
+            {`const res = await fetch(\`${backendUrl}/api/log\`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                apiKey,
+                message,
+                severity_level: severity,
+              }),
+            });`}
           </code>
         </pre>
         <p>API ključ mora biti veljaven</p>
