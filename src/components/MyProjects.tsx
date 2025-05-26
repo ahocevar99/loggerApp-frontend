@@ -18,7 +18,7 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
 
   const fetchProjects = async () => {
     if (!token) return
-    const res = await fetch(`${backendUrl}/api/myProjects`, {
+    const res = await fetch(`https://loggerapp-backend.onrender.com/api/myProjects`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
