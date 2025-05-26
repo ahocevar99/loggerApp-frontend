@@ -62,7 +62,7 @@ const Home: React.FC = () => {
             cursor: 'pointer',
             border: 0,
             boxShadow: '0 5px 7px rgba(0, 0, 0, 0.1)',
-            borderRadius:"0.5rem"
+            borderRadius: "0.5rem"
           }}
         >
           {'< LOG OUT'}
@@ -73,7 +73,7 @@ const Home: React.FC = () => {
         <div className="flex justify-center mt-[10rem]">
           <button
             onClick={handleGetToken}
-            style={{padding:"1.1rem", cursor:"pointer", borderRadius:"2rem", fontSize:"1.3rem", boxShadow:'0 5px 7px rgba(0, 0, 0, 0.1)'}}
+            style={{ padding: "1.1rem", cursor: "pointer", borderRadius: "2rem", fontSize: "1.3rem", boxShadow: '0 5px 7px rgba(0, 0, 0, 0.1)' }}
           >
             {loadingToken ? 'Pridobivanje dostopa...' : 'Pridobi dostop'}
           </button>
@@ -102,13 +102,18 @@ const Home: React.FC = () => {
             </p>
             {isAdmin && (
               <p
-              className="p-[2rem] cursor-pointer m-auto flex"
-              onClick={() => setContent(<AddUser token={token} />)}
-            >
-              Dodaj uporabnika
-            </p>
+                className="p-[2rem] cursor-pointer m-auto flex"
+                onClick={() => setContent(<AddUser token={token} />)}
+              >
+                Dodaj uporabnika
+              </p>
             )}
           </nav>
+          {user && (
+            <div className="text-right pr-[2rem] pt-[1rem] text-gray-700 text-lg">
+              Prijavljen si kot: <span className="font-semibold">{user.name}</span>
+            </div>
+          )}
           <div className="mt-[3rem] w-[90%] ml-[5%]">{content}</div>
         </>
       )}
