@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 interface AddUserProps {
   token: string;
@@ -23,7 +24,7 @@ const AddUser: React.FC<AddUserProps> = ({ token }) => {
     setMessage(null);
 
     try {
-      const res = await fetch('/api/addUser', {
+      const res = await fetch(`${backendUrl}/api/addUser`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

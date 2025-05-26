@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 interface AddProjectProps {
     token: string;
@@ -68,7 +69,7 @@ const AddProject: React.FC<AddProjectProps> = ({ token }) => {
         };
 
         try {
-            const res = await fetch('/api/addProject', {
+            const res = await fetch(`${backendUrl}/api/addProject`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

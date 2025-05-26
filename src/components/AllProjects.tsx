@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import type { Log } from '../utils/logUtils'
 import { filterLogs, sortLogs } from '../utils/logUtils'
 import * as XLSX from 'xlsx';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 interface AddProjectProps {
@@ -42,7 +43,7 @@ const AllProjects: React.FC<AddProjectProps> = ({ token }) => {
 
   const fetchProjects = async () => {
     if (!token) return
-    const res = await fetch("/api/allProjects", {
+    const res = await fetch(`${backendUrl}/api/allProjects`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +58,7 @@ const AllProjects: React.FC<AddProjectProps> = ({ token }) => {
 
   const fetchLogs = async () => {
     if (!token) return
-    const res = await fetch("/api/allLogs", {
+    const res = await fetch(`${backendUrl}/api/allLogs`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

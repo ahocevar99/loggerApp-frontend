@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Copy } from 'lucide-react'
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 interface AddProjectProps {
   token: string | null;
@@ -17,7 +18,7 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
 
   const fetchProjects = async () => {
     if (!token) return
-    const res = await fetch("/api/myProjects", {
+    const res = await fetch(`${backendUrl}/api/myProjects`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
