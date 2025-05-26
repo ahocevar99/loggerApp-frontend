@@ -48,21 +48,74 @@ const Home: React.FC = () => {
     isAdmin = roles?.includes('Admin');
   }
 
-
   return (
     <div>
-      <div className="absolute left-[2rem] top-[2rem]">
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr auto',
+          alignItems: 'center',
+          gap: '2rem',
+          padding: '1rem 2rem',
+          borderBottom: '1px solid #ddd',
+        }}
+      >
+        <button
+          onClick={() => token && setContent(<AddProject token={token} />)}
+          style={{
+            fontSize: '1.5rem',
+            cursor: 'pointer',
+            borderRadius: '0.5rem',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+            width:"8rem",
+            height:"4rem"
+          }}
+        >
+          +
+        </button>
+
+        <nav
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '2rem',
+            fontSize: '1.2rem',
+            fontWeight: '500',
+          }}
+        >
+          <p
+            className="cursor-pointer"
+            onClick={() => setContent(<MyProjects token={token} />)}
+          >
+            Moji projekti
+          </p>
+          <p
+            className="cursor-pointer"
+            onClick={() => setContent(<AllProjects token={token} />)}
+          >
+            Vsi projekti
+          </p>
+          {isAdmin && (
+            <p
+              className="cursor-pointer"
+              onClick={() => token && setContent(<AddUser token={token} />)}
+            >
+              Dodaj uporabnika
+            </p>
+          )}
+        </nav>
+
         <button
           onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
           style={{
             backgroundColor: 'green',
-            width: '15rem',
-            height: '4rem',
             color: 'white',
             cursor: 'pointer',
-            border: 0,
+            border: 'none',
+            borderRadius: '0.5rem',
             boxShadow: '0 5px 7px rgba(0, 0, 0, 0.1)',
-            borderRadius: "0.5rem"
+            width:"8rem",
+            height:"4rem"
           }}
         >
           {'< LOG OUT'}
@@ -80,41 +133,12 @@ const Home: React.FC = () => {
         </div>
       ) : (
         <>
-          <nav className="border-1 border-solid mt-[2rem] flex flex-col w-[15rem] absolute left-[2rem] top-[6rem]">
-            <button
-              className="py-[1rem] px-[2rem] cursor-pointer"
-              style={{ fontSize: '1.5rem' }}
-              onClick={() => setContent(<AddProject token={token} />)}
-            >
-              +
-            </button>
-            <p
-              className="p-[2rem] cursor-pointer m-auto flex"
-              onClick={() => setContent(<MyProjects token={token} />)}
-            >
-              Moji projekti
-            </p>
-            <p
-              className="p-[2rem] cursor-pointer m-auto flex"
-              onClick={() => setContent(<AllProjects token={token} />)}
-            >
-              Vsi projekti
-            </p>
-            {isAdmin && (
-              <p
-                className="p-[2rem] cursor-pointer m-auto flex"
-                onClick={() => setContent(<AddUser token={token} />)}
-              >
-                Dodaj uporabnika
-              </p>
-            )}
-          </nav>
           {user && (
-            <div className="text-right pr-[2rem] pt-[1rem] text-gray-700 text-lg">
-              Prijavljen si kot: <span className="font-semibold">{user.name}</span>
+            <div className="text-center pt-[1rem] text-gray-700 text-lg">
+              Prijavljen si kot: <span className="font-semibold italic">{user.name}</span>
             </div>
           )}
-          <div className="mt-[3rem] w-[90%] ml-[5%]">{content}</div>
+          <div className="mt-[3rem] w-[90%] justify-center flex flex-row items-center m-auto">{content}</div>
         </>
       )}
     </div>

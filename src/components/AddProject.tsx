@@ -87,14 +87,14 @@ const AddProject: React.FC<AddProjectProps> = ({ token }) => {
     }
 
     return (
-        <div className="m-auto mt-[5rem] ml-[20rem] flex flex-col">
-            <h3 className="mb-[2rem] p-[0.5rem] ml-[2rem] font-semibold text-xl">Dodaj projekt</h3>
+        <div className="m-auto mt-[2rem] flex flex-col justify-center items-center">
+            <h3 className="mb-[5rem] p-[0.5rem] font-semibold text-xl">Dodaj projekt</h3>
 
-            <div className="grid grid-cols-[10rem_1fr] gap-y-[1rem] ml-[2rem]">
-                <label className="mr-[2rem]">Ime projekta:</label>
+            <div className="grid grid-cols-[10rem_1fr] gap-y-[1rem] gap-x-[5rem]">
+                <label>Ime projekta:</label>
                 <input type="text" className="py-[0.3rem] w-[20rem]" value={projectName || ""} onChange={((e) => setProjectName(e.target.value))} />
 
-                <label className="mr-[2rem]">Izvor:</label>
+                <label>Izvor:</label>
                 <div className="flex items-center gap-2">
                     <input type="text" className="py-[0.3rem] w-[20rem]" value={origins[0] || ""} onChange={((e) => handleOriginChange(0, e.target.value))} />
                     <button

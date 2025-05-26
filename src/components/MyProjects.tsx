@@ -44,19 +44,19 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
   }
 
   return (
-    <div className="m-auto mt-[5rem] ml-[20rem] flex flex-row">
+    <div className="m-auto mt-[2rem] flex flex-row justify-evenly w-[100rem]">
       <div className='flex flex-col'>
-        <h3 className="mb-[2rem] p-[0.5rem] ml-[2rem] font-semibold text-xl">
+        <h3 className="mb-[2rem] p-[0.5rem] font-semibold text-xl">
           Moji projekti
         </h3>
 
         {myProjects.length === 0 ? (
-          <div className="italic ml-[2rem]">Nimaš še dodanih projektov.</div>
+          <div className="italic">Nimaš še dodanih projektov.</div>
         ) : (
           myProjects.map((project) => {
             const isCopied = copiedKeyId === project._id;
             return (
-              <div key={project._id} className="ml-[2rem] mb-4">
+              <div key={project._id} className="mb-4">
                 <h2 className="font-medium">{project.projectName}</h2>
                 <div className="flex items-center">
                   <span className="text-gray-600">API ključ: {project.apiKey}</span>
@@ -77,7 +77,7 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
           })
         )}
       </div>
-      <div className='ml-[10rem]'>
+      <div>
         <h3 className="mb-[2rem] p-[0.5rem] font-semibold text-xl">
           Navodila
         </h3>

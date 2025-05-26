@@ -57,10 +57,10 @@ const AddUser: React.FC<AddUserProps> = ({ token }) => {
   };
 
   return (
-    <div className="m-auto mt-[5rem] ml-[20rem] flex flex-col">
-      <h3 className="mb-[2rem] p-[0.5rem] ml-[2rem] font-semibold text-xl">Dodaj uporabnika</h3>
+    <div className="m-auto mt-[2rem] flex flex-col justify-center items-center">
+      <h3 className="mb-[5rem] p-[0.5rem] font-semibold text-xl">Dodaj uporabnika</h3>
 
-      <div className="grid grid-cols-[10rem_1fr] gap-y-[1rem] gap-x-[2rem] ml-[2rem]">
+      <div className="grid grid-cols-[10rem_1fr] gap-y-[1rem] gap-x-[5rem] ml-[2rem]">
         <label>Email:</label>
         <input
           type="email"

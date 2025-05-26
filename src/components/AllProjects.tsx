@@ -93,43 +93,35 @@ const AllProjects: React.FC<AddProjectProps> = ({ token }) => {
   )
 
   return (
-    <div className="m-auto mt-[5rem] ml-[20rem] flex flex-col">
-      <div className="flex w-full justify-start items-center">
+    <div className="m-auto mt-[2rem] flex flex-col justify-center items-center">
+      <div className="flex w-[60%] justify-evenly items-center">
         <h3
-          className={`mb-[2rem] p-[0.5rem] ml-[2rem] cursor-pointer ${content === "projects" ? "border-b" : ""}`}
+          className={`mb-[2rem] p-[0.5rem] cursor-pointer ${content === "projects" ? "border-b" : ""}`}
           onClick={() => setContent("projects")}
         >
           Vsi projekti
         </h3>
         <h3
-          className={`mb-[2rem] p-[0.5rem] ml-[2rem] cursor-pointer ${content === "logs" ? "border-b" : ""}`}
+          className={`mb-[2rem] p-[0.5rem] cursor-pointer ${content === "logs" ? "border-b" : ""}`}
           onClick={() => setContent("logs")}
         >
           Izpisi
         </h3>
         <button
           onClick={refreshData}
-          className="ml-[2rem] px-3 h-[2rem] cursor-pointer"
+          className="px-[2rem] h-[3rem] cursor-pointer"
         >
           Osveži
         </button>
-        {content === "logs" && (
-          <button
-            onClick={() => exportToExcel(searched)}
-            className="ml-[1rem] px-3 h-[2rem] cursor-pointer"
-          >
-            Izvozi v Excel
-          </button>
-        )}
 
       </div>
 
       {content === "projects" ? (
         projects.length === 0 ? (
-          <div className="italic ml-[2rem]">Ni še dodanih projektov.</div>
+          <div className="italic">Ni še dodanih projektov.</div>
         ) : (
           <div
-            className="ml-[2rem] grid gap-6"
+            className="grid gap-[5rem] m-auto"
             style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}
           >
             {projects.map((project) => (
@@ -143,7 +135,7 @@ const AllProjects: React.FC<AddProjectProps> = ({ token }) => {
         )
       ) : (
         <>
-          <div className="mb-[1rem] ml-[2rem] flex items-center gap-4">
+          <div className="mb-[1rem] flex flex-row items-center gap-4 justify-around m-auto">
             <input
               type="text"
               placeholder="Išči po sporočilu, projektu, resnosti..."
@@ -184,18 +176,27 @@ const AllProjects: React.FC<AddProjectProps> = ({ token }) => {
           </div>
 
           {searched.length === 0 ? (
-            <div className="italic ml-[2rem]">Ni najdenih logov.</div>
+            <div className="italic mt-[3rem]">Ni najdenih logov.</div>
           ) : (
             <div>
-              <p className='ml-[2rem]'>{`Število izpisov za izbran kriterij: ${searched.length}`}</p>
+              <div className='flex flex-row items-center justify-around mb-[4rem]'>
+                <p>{`Število izpisov za izbran kriterij: ${searched.length}`}</p>
+                {content === "logs" && (
+                  <button
+                    onClick={() => exportToExcel(searched)}
+                    className="px-[2rem] h-[3rem] cursor-pointer"
+                  >
+                    Izvozi v Excel
+                  </button>
+                )}
+              </div>
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '1.5rem',
-                  marginLeft: '2rem',
-                  marginRight: '2rem',
-                  width: '70%'
+                  gridTemplateColumns: 'repeat(5, 1fr)',
+                  gap: '5rem',
+                  maxWidth: '80%',
+                  margin: '0 auto',
                 }}
               >
                 {searched.map((log) => (
