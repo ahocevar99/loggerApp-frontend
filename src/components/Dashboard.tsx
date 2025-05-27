@@ -11,6 +11,7 @@ const Home: React.FC = () => {
     user,
     isAuthenticated,
     isLoading,
+    getAccessTokenSilently,
     getAccessTokenWithPopup,
   } = useAuth0();
 
@@ -21,7 +22,7 @@ const Home: React.FC = () => {
   const handleGetToken = async () => {
     setLoadingToken(true);
     try {
-      const accessToken = await getAccessTokenWithPopup({
+      const accessToken = await getAccessTokenSilently({
         authorizationParams: {
           audience: 'https://logerApp/api',
           scope: 'read:projects write:projects',
@@ -29,8 +30,20 @@ const Home: React.FC = () => {
       });
       setToken(accessToken ?? null);
       setContent(<MyProjects token={accessToken ?? null} />);
-    } catch (err) {
-      console.error('Token error:', err);
+    } catch (silentError) {
+      console.warn('Silent token fetch failed, trying popup...', silentError);
+      try {
+        const accessToken = await getAccessTokenWithPopup({
+          authorizationParams: {
+            audience: 'https://logerApp/api',
+            scope: 'read:projects write:projects',
+          },
+        });
+        setToken(accessToken ?? null);
+        setContent(<MyProjects token={accessToken ?? null} />);
+      } catch (popupError) {
+        console.error('Popup token error:', popupError);
+      }
     } finally {
       setLoadingToken(false);
     }
@@ -41,12 +54,9 @@ const Home: React.FC = () => {
   }
 
   if (!isAuthenticated) return null;
-  let isAdmin = false;
 
-  if (isAuthenticated) {
-    const roles = user && user['https://my-app.com/roles'];
-    isAdmin = roles?.includes('Admin');
-  }
+  const roles = user && user['https://my-app.com/roles'];
+  const isAdmin = roles?.includes('Admin');
 
   return (
     <div>
@@ -67,8 +77,8 @@ const Home: React.FC = () => {
             cursor: 'pointer',
             borderRadius: '0.5rem',
             boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-            width:"8rem",
-            height:"4rem"
+            width: "8rem",
+            height: "4rem"
           }}
         >
           +
@@ -83,23 +93,14 @@ const Home: React.FC = () => {
             fontWeight: '500',
           }}
         >
-          <p
-            className="cursor-pointer"
-            onClick={() => setContent(<MyProjects token={token} />)}
-          >
+          <p className="cursor-pointer" onClick={() => setContent(<MyProjects token={token} />)}>
             Moji projekti
           </p>
-          <p
-            className="cursor-pointer"
-            onClick={() => setContent(<AllProjects token={token} />)}
-          >
+          <p className="cursor-pointer" onClick={() => setContent(<AllProjects token={token} />)}>
             Vsi projekti
           </p>
           {isAdmin && (
-            <p
-              className="cursor-pointer"
-              onClick={() => token && setContent(<AddUser token={token} />)}
-            >
+            <p className="cursor-pointer" onClick={() => token && setContent(<AddUser token={token} />)}>
               Dodaj uporabnika
             </p>
           )}
@@ -114,8 +115,8 @@ const Home: React.FC = () => {
             border: 'none',
             borderRadius: '0.5rem',
             boxShadow: '0 5px 7px rgba(0, 0, 0, 0.1)',
-            width:"8rem",
-            height:"4rem"
+            width: "8rem",
+            height: "4rem"
           }}
         >
           {'< LOG OUT'}
@@ -126,7 +127,13 @@ const Home: React.FC = () => {
         <div className="flex justify-center mt-[10rem]">
           <button
             onClick={handleGetToken}
-            style={{ padding: "1.1rem", cursor: "pointer", borderRadius: "2rem", fontSize: "1.3rem", boxShadow: '0 5px 7px rgba(0, 0, 0, 0.1)' }}
+            style={{
+              padding: "1.1rem",
+              cursor: "pointer",
+              borderRadius: "2rem",
+              fontSize: "1.3rem",
+              boxShadow: '0 5px 7px rgba(0, 0, 0, 0.1)'
+            }}
           >
             {loadingToken ? 'Pridobivanje dostopa...' : 'Pridobi dostop'}
           </button>
@@ -134,11 +141,13 @@ const Home: React.FC = () => {
       ) : (
         <>
           {user && (
-            <div className="text-center pt-[1rem] text-gray-700 text-lg">
+            <div className="text-center pt-[1rem] mt-[1rem] text-gray-700 text-lg">
               Prijavljen si kot: <span className="font-semibold italic">{user.name}</span>
             </div>
           )}
-          <div className="mt-[3rem] w-[90%] justify-center flex flex-row items-center m-auto">{content}</div>
+          <div className="mt-[3rem] w-[90%] justify-center flex flex-row items-center m-auto">
+            {content}
+          </div>
         </>
       )}
     </div>
