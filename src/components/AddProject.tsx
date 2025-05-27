@@ -27,11 +27,11 @@ const AddProject: React.FC<AddProjectProps> = ({ token }) => {
         }
     }
 
-    const isValidURL = (url: string) => {
+    const isValidURL = (url: string): boolean => {
         try {
-            new URL(url);
-            return true;
-        } catch (e) {
+            const parsed = new URL(url);
+            return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+        } catch {
             return false;
         }
     };
@@ -55,13 +55,15 @@ const AddProject: React.FC<AddProjectProps> = ({ token }) => {
             return;
         }
 
-        const filteredOrigins = origins.filter((origin) => origin.trim() !== '');
+        const filteredOrigins = origins
+            .map(origin => origin.trim())
+            .filter(origin => origin !== '');
         const hasValidUrl = filteredOrigins.some(isValidURL);
         if (!hasValidUrl) {
             setAlertMessage("Vsaj en izvorni URL naslov mora biti veljaven!");
             return;
         }
-        
+
 
         const payload = {
             name: projectName,
