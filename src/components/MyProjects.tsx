@@ -93,7 +93,7 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
               body: JSON.stringify({
                 apiKey,
                 message,
-                severity_level: severity,
+                severity_level,
               }),
             });`}
           </code>
