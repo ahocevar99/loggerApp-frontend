@@ -18,12 +18,13 @@ const AddProject: React.FC<AddProjectProps> = ({ token }) => {
 
     const onSaveMessage = `Projekt ${projectName} je uspešno shranjen. Nahaja se v zavihku 'Moji projekti', kjer je tudi API ključ, ki ga uporabiš za pošiljanje izpisov tega projekta`
 
+    const removeTrailingSlash = (url: string) => url.endsWith('/') ? url.slice(0, -1) : url;
     const handleOriginChange = (index: number, value: string) => {
-        if (value != "") {
-            let updated: string[];
-            updated = [...origins]
-            updated[index] = value;
-            setOrigins(updated)
+        const cleanedValue = removeTrailingSlash(value.trim());
+        if (cleanedValue !== "") {
+            let updated = [...origins];
+            updated[index] = cleanedValue;
+            setOrigins(updated);
         }
     }
 
