@@ -94,16 +94,13 @@ const AddUser: React.FC<AddUserProps> = ({ token }) => {
         >
           {loading ? 'Dodajanje...' : 'Dodaj'}
         </button>
-
-        {message && (
-          <>
-            <div></div>
-            <div className={`${message.type === 'success' ? 'text-green-600' : 'text-red-600'} italic`}>
-              {message.text}
-            </div>
-          </>
-        )}
       </div>
+      {message && (
+        <div className="flex flex-row mt-[2rem] justify-center items-center m-auto">
+          <div></div>
+          <div className="italic">{message.text}</div>
+        </div>
+      )}
     </div>
   );
 };

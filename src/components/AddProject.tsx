@@ -123,18 +123,22 @@ const AddProject: React.FC<AddProjectProps> = ({ token }) => {
                 {alertMessage != "" && (
                     <>
                         <div></div>
-                        <div className='text-red-600 italic'>{alertMessage}</div>
+                        <div className='italic'>{alertMessage}</div>
                     </>
                 )}
                 {
                     <>
                         <div></div>
                         <button className='w-[5rem] h-[2rem] cursor-pointer' onClick={handleSubmit}>Dodaj</button>
-                        <div></div>
-                        <div className='italic'>{projectSavedMessage || ""}</div>
                     </>
                 }
             </div>
+            {projectSavedMessage && (
+                <div className="flex flex-row mt-[2rem] justify-center items-center m-auto">
+                    <div></div>
+                    <div className="italic w-[60%]">{projectSavedMessage}</div>
+                </div>
+            )}
         </div>
     )
 }
