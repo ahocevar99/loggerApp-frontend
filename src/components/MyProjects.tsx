@@ -88,6 +88,7 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                "Origin": "--> OriginURL <--"
               },
               body: JSON.stringify({
                 apiKey,
@@ -98,6 +99,7 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
           </code>
         </pre>
         <p>API ključ mora biti veljaven</p>
+        <p>OriginURL je URL iz katerega se izpisi pošiljajo na API</p>
         <p>Resnost (severity) mora biti ena od teh vrednosti:</p>
         <p className='italic'>debug, info, notice, warning, err, crit, alert, emerg</p>
         Več: <a href="https://en.wikipedia.org/wiki/Syslog">https://en.wikipedia.org/wiki/Syslog</a>
