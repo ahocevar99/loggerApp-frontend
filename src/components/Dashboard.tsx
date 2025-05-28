@@ -4,7 +4,7 @@ import MyProjects from './MyProjects';
 import AllProjects from './AllProjects';
 import AddProject from './AddProject';
 import AddUser from './AddUser';
-import '../styles/Dashboard.css'
+import '../styles/Dashboard.css';
 
 const Home: React.FC = () => {
   const {
@@ -32,8 +32,7 @@ const Home: React.FC = () => {
       });
       setToken(accessToken ?? null);
       setContent(<MyProjects token={accessToken ?? null} />);
-    } catch (silentError) {
-      console.warn('Silent token fetch failed, trying popup...', silentError);
+    } catch {
       try {
         const accessToken = await getAccessTokenWithPopup({
           authorizationParams: {
@@ -52,7 +51,12 @@ const Home: React.FC = () => {
   };
 
   if (isLoading) {
-    return <p className="flex items-center justify-center text-3xl m-auto">Nalaganje...</p>;
+    return (
+      <p className="loading-text" role="alert" aria-live="polite">
+        <span className="spinner" aria-hidden="true"></span>
+        Nalaganje...
+      </p>
+    );
   }
 
   if (!isAuthenticated) return null;
@@ -68,10 +72,10 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div>
-      <nav>
+    <div className="home-container">
+      <nav className="navbar">
         <button
-          className='add-project'
+          className="btn add-project"
           onClick={() => token && setContent(<AddProject token={token} />)}
           aria-label="Dodaj projekt"
         >
@@ -79,7 +83,7 @@ const Home: React.FC = () => {
         </button>
 
         <button
-          className="hamburger-menu"
+          className="btn hamburger-menu"
           onClick={toggleMenu}
           aria-label="Toggle navigation menu"
         >
@@ -95,7 +99,7 @@ const Home: React.FC = () => {
         </div>
 
         <button
-          className='logout'
+          className="btn logout"
           onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
           aria-label="Odjava"
         >
@@ -104,16 +108,11 @@ const Home: React.FC = () => {
       </nav>
 
       {!token ? (
-        <div className="flex justify-center mt-[10rem]">
+        <div className="token-button-wrapper">
           <button
             onClick={handleGetToken}
-            style={{
-              padding: "1.1rem",
-              cursor: "pointer",
-              borderRadius: "2rem",
-              fontSize: "1.3rem",
-              boxShadow: '0 5px 7px rgba(0, 0, 0, 0.1)'
-            }}
+            className="btn token-button"
+            disabled={loadingToken}
           >
             {loadingToken ? 'Pridobivanje dostopa...' : 'Pridobi dostop'}
           </button>
@@ -121,14 +120,12 @@ const Home: React.FC = () => {
       ) : (
         <>
           {user && (
-            <div className='logged-user'>
+            <div className="logged-user">
               <p>Prijavljen si kot:</p>
               <span>{user.name}</span>
             </div>
           )}
-          <div className="dashboard-content">
-            {content}
-          </div>
+          <div className="dashboard-content">{content}</div>
         </>
       )}
     </div>

@@ -14,7 +14,7 @@ const AddProject: React.FC<AddProjectProps> = ({ token }) => {
     const [projectSavedMessage, setProjectSavedMessage] = useState<string>("")
 
     useEffect(() => {
-        if (sources > 2) setAlertMessage("Dodaš lahko največ 3 izvorne URL naslove")
+        if (sources > 2) setAlertMessage("Dodaš lahko največ 3 izvorne URL naslove!")
     }, [sources])
 
     const onSaveMessage = `Projekt ${projectName} je uspešno shranjen. Nahaja se v zavihku 'Moji projekti', kjer je tudi API ključ, ki ga uporabiš za pošiljanje izpisov tega projekta`

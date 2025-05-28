@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import Dashboard from './components/Dashboard';
+import './styles/Dashboard.css'
 
 const App: React.FC = () => {
   const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
@@ -15,7 +16,14 @@ const App: React.FC = () => {
     }
   }, [isLoading, isAuthenticated, loginWithRedirect]);
 
-  if (isLoading) return <p className='flex items-center justify-center text-3xl m-auto text-green-500'>Nalaganje...</p>;
+  if (isLoading) {
+    return (
+      <p className="loading-text" role="alert" aria-live="polite">
+        <span className="spinner" aria-hidden="true"></span>
+        Nalaganje...
+      </p>
+    );
+  }
 
   return (
     <div>
