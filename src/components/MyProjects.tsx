@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Copy } from 'lucide-react'
+import '../styles/MyProjects.css'
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 interface AddProjectProps {
@@ -40,72 +41,76 @@ const MyProjects: React.FC<AddProjectProps> = ({ token }) => {
     setCopiedKeyId(projectId);
     setTimeout(() => {
       setCopiedKeyId(null);
-    }, 5000);
+    }, 4000);
   }
 
   return (
-    <div className="m-auto mt-[2rem] flex flex-row justify-evenly w-[100rem]">
-      <div className='flex flex-col'>
-        <h3 className="mb-[2rem] p-[0.5rem] font-semibold text-xl">
+    <div className="container">
+      <section className='my-projects'>
+        <h3 className="section-title">
           Moji projekti
         </h3>
 
         {myProjects.length === 0 ? (
-          <div className="italic">Nimaš še dodanih projektov.</div>
+          <div className="empty-message">Nimaš še dodanih projektov.</div>
         ) : (
           myProjects.map((project) => {
             const isCopied = copiedKeyId === project._id;
             return (
-              <div key={project._id} className="mb-4">
-                <h2 className="font-medium">{project.projectName}</h2>
-                <div className="flex items-center">
-                  <span className="text-gray-600">API ključ: {project.apiKey}</span>
-                  <Copy
-                    onClick={() => handleCopy(project.apiKey, project._id)}
-                    style={{
-                      cursor: "pointer",
-                      marginLeft: "1.5rem",
-                      transition: "color 0.3s",
-                      color: isCopied ? "#B8B8B8" : "black",
-                    }}
-                    size={24}
-                    strokeWidth={1.5}
-                  />
+              <div key={project._id} className="project-card">
+                <h4 className="project-name">{project.projectName}</h4>
+                <div className='api-key'>
+                  <span className="label">API ključ:</span>
+                  <div className="key-container">
+                    <code className="api-key-text">{project.apiKey}</code>
+                    <span
+                      role="img"
+                      aria-label={isCopied ? "Kopirano!" : "Kopiraj API ključ"}
+                      title={isCopied ? "Kopirano!" : "Kopiraj API ključ"}
+                      style={{ display: 'inline-flex', cursor: 'pointer' }}
+                      onClick={() => handleCopy(project.apiKey, project._id)}
+                    >
+                      <Copy
+                        className={`copy-icon ${isCopied ? 'copied' : ''}`}
+                        size={24}
+                        strokeWidth={1.5}
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             );
           })
         )}
-      </div>
-      <div>
-        <h3 className="mb-[2rem] p-[0.5rem] font-semibold text-xl">
-          Navodila
-        </h3>
-        <p>Pošiljanje izpisov na API mora biti v tem formatu: </p>
-        <pre style={{fontSize:"1rem"}}>
+      </section>
+
+      <section className='instructions'>
+        <h3 className="section-title">Navodila</h3>
+        <p>Pošiljanje izpisov na API mora biti v tem formatu:</p>
+        <pre className='code-block'>
           <code>
             {`const res = await fetch(\`${backendUrl}/api/log\`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Origin": "--> OriginURL <--"
-              },
-              body: JSON.stringify({
-                apiKey,
-                message,
-                severity_level,
-              }),
-            });`}
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Origin": "--> OriginURL <--"
+  },
+  body: JSON.stringify({
+    apiKey,
+    message,
+    severity_level,
+  }),
+});`}
           </code>
         </pre>
-        <p>API ključ mora biti veljaven</p>
-        <p>OriginURL je URL iz katerega se izpisi pošiljajo na API</p>
-        <p>Resnost (severity) mora biti ena od teh vrednosti:</p>
+        <p><strong>apiKey</strong> mora biti veljaven API ključ</p>
+        <p><strong>OriginURL</strong> je URL iz katerega se izpisi pošiljajo na API</p>
+        <p><strong>severity_level</strong> (resnost) mora biti ena od teh vrednosti:</p>
         <p className='italic'>debug, info, notice, warning, err, crit, alert, emerg</p>
-        Več: <a href="https://en.wikipedia.org/wiki/Syslog">https://en.wikipedia.org/wiki/Syslog</a>
-      </div>
+        <p>Več: <a href="https://en.wikipedia.org/wiki/Syslog" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Syslog</a></p>
+      </section>
     </div>
   );
 }
 
-export default MyProjects
+export default MyProjects;

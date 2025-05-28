@@ -1,0 +1,126 @@
+.add-user-container {
+  max-width: 1000px;
+  width: 90%;
+  padding: 1rem 1.5rem;
+  margin: 2rem auto 3rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+
+.add-user-container .title {
+  margin-bottom: 3rem;
+  font-weight: 700;
+  font-size: 1.8rem;       
+  text-align: center;
+  color: #1e40af;            
+  border-bottom: 2px solid #1e40af;
+  padding-bottom: 0.25rem;
+  width: 100%;
+  max-width: 900px;
+}
+
+.add-user-container .form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.add-user-container .form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 30rem;
+}
+
+.add-user-container .form-group label {
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: #555;
+  align-self: flex-start;
+}
+
+.add-user-container .input-field {
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 30rem;
+  box-sizing: border-box;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.add-user-container .input-field:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+.add-user-container .submit-btn {
+  width: 5rem;
+  height: 2.5rem;
+  margin-top: 1rem;
+  background-color: #28a745;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-user-container .submit-btn:hover:not(:disabled) {
+  background-color: #1e7e34;
+}
+
+.add-user-container .submit-btn:disabled {
+  background-color: #94d3a2;
+  cursor: not-allowed;
+}
+
+.add-user-container .message-container {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.add-user-container .alert {
+  font-style: italic;
+  text-align: center;
+  width: 100%;
+  max-width: 60%;
+  color: #777;
+}
+
+@media (min-width: 768px) {
+  .add-user-container .alert {
+    max-width: 60%;
+  }
+}
+
+@media (max-width: 767px) {
+  .add-user-container .form-group,
+  .add-user-container .input-field {
+    max-width: 100%;
+  }
+
+  .add-user-container .input-field {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .add-user-container .submit-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}

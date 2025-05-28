@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/AddUser.css'
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 interface AddUserProps {
@@ -57,52 +58,58 @@ const AddUser: React.FC<AddUserProps> = ({ token }) => {
   };
 
   return (
-    <div className="m-auto mt-[2rem] flex flex-col justify-center items-center">
-      <h3 className="mb-[5rem] p-[0.5rem] font-semibold text-xl">Dodaj uporabnika</h3>
+    <div className="add-user-container">
+      <h3 className="title">Dodaj uporabnika</h3>
 
-      <div className="grid grid-cols-[10rem_1fr] gap-y-[1rem] gap-x-[5rem] ml-[2rem]">
-        <label>Email:</label>
-        <input
-          type="email"
-          className="py-[0.3rem] w-[20rem]"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <div className="form">
+        <div className="form-group">
+          <label>Email:</label>
+          <input
+            type="email"
+            className="input-field"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-        <label>Uporabniško ime:</label>
-        <input
-          type="text"
-          className="py-[0.3rem] w-[20rem]"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <div className="form-group">
+          <label>Uporabniško ime:</label>
+          <input
+            type="text"
+            className="input-field"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
 
-        <label>Geslo:</label>
-        <input
-          type="password"
-          className="py-[0.3rem] w-[20rem]"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <div></div>
+        <div className="form-group">
+          <label>Geslo:</label>
+          <input
+            type="password"
+            className="input-field"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        {message && (
+          <div className="message-container">
+            <div></div>
+            <div className="alert">{message.text}</div>
+          </div>
+        )}
         <button
           type="submit"
-          className="w-[5rem] h-[2rem] cursor-pointer"
+          className="submit-btn"
           onClick={handleSubmit}
           disabled={loading}
         >
           {loading ? 'Dodajanje...' : 'Dodaj'}
         </button>
       </div>
-      {message && (
-        <div className="flex flex-row mt-[2rem] justify-center items-center m-auto">
-          <div></div>
-          <div className="italic">{message.text}</div>
-        </div>
-      )}
     </div>
   );
+
+
 };
 
 export default AddUser;

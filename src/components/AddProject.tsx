@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import "../styles/AddProject.css"
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 interface AddProjectProps {
@@ -90,57 +91,66 @@ const AddProject: React.FC<AddProjectProps> = ({ token }) => {
     }
 
     return (
-        <div className="m-auto mt-[2rem] flex flex-col justify-center items-center">
-            <h3 className="mb-[5rem] p-[0.5rem] font-semibold text-xl">Dodaj projekt</h3>
+        <div className="add-project-container">
+            <h3 className="title">Dodaj projekt</h3>
 
-            <div className="grid grid-cols-[10rem_1fr] gap-y-[1rem] gap-x-[5rem]">
-                <label>Ime projekta:</label>
-                <input type="text" className="py-[0.3rem] w-[20rem]" value={projectName || ""} onChange={((e) => setProjectName(e.target.value))} />
-
-                <label>Izvor:</label>
-                <div className="flex items-center gap-2">
-                    <input type="text" className="py-[0.3rem] w-[20rem]" value={origins[0] || ""} onChange={((e) => handleOriginChange(0, e.target.value))} />
-                    <button
-                        onClick={() => setSources(sources + 1)}
-                        className="px-[1rem] py-[0.5rem] ml-[1rem] cursor-pointer"
-                    >
-                        +
-                    </button>
+            <div className="form">
+                <div className="form-group">
+                    <label>Ime projekta:</label>
+                    <input
+                        type="text"
+                        value={projectName || ""}
+                        onChange={(e) => setProjectName(e.target.value)}
+                    />
                 </div>
+
+                <div className="form-group">
+                    <label>Izvor:</label>
+                    <div className="input-row">
+                        <input
+                            type="text"
+                            value={origins[0] || ""}
+                            onChange={(e) => handleOriginChange(0, e.target.value)}
+                        />
+                        <button onClick={() => setSources(sources + 1)}>+</button>
+                    </div>
+                </div>
+
                 {sources > 0 && (
-                    <>
-                        <div></div>
-                        <input type="text" className="py-[0.3rem] w-[20rem]" value={origins[1] || ""} onChange={((e) => handleOriginChange(1, e.target.value))} />
-                    </>
+                    <input
+                        type="text"
+                        className="additional-input"
+                        value={origins[1] || ""}
+                        onChange={(e) => handleOriginChange(1, e.target.value)}
+                    />
+                )}
+                {sources > 1 && (
+                    <input
+                        type="text"
+                        className="additional-input"
+                        value={origins[2] || ""}
+                        onChange={(e) => handleOriginChange(2, e.target.value)}
+                    />
                 )}
 
-                {sources > 1 && (
-                    <>
-                        <div></div>
-                        <input type="text" className="py-[0.3rem] w-[20rem]" value={origins[2] || ""} onChange={((e) => handleOriginChange(2, e.target.value))} />
-                    </>
+                {alertMessage && (
+                    <div className="alert">{alertMessage}</div>
                 )}
-                {alertMessage != "" && (
-                    <>
-                        <div></div>
-                        <div className='italic'>{alertMessage}</div>
-                    </>
-                )}
-                {
-                    <>
-                        <div></div>
-                        <button className='w-[5rem] h-[2rem] cursor-pointer' onClick={handleSubmit}>Dodaj</button>
-                    </>
-                }
+
+                <button className="submit-btn" onClick={handleSubmit}>Dodaj</button>
             </div>
+
             {projectSavedMessage && (
-                <div className="flex flex-row mt-[2rem] justify-center items-center m-auto">
-                    <div></div>
-                    <div className="italic w-[60%]">{projectSavedMessage}</div>
+                <div className="success-message">
+                    {projectSavedMessage}
                 </div>
             )}
         </div>
-    )
+    );
+
+
+
+
 }
 
 export default AddProject

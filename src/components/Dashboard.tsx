@@ -4,6 +4,7 @@ import MyProjects from './MyProjects';
 import AllProjects from './AllProjects';
 import AddProject from './AddProject';
 import AddUser from './AddUser';
+import '../styles/Dashboard.css'
 
 const Home: React.FC = () => {
   const {
@@ -18,6 +19,7 @@ const Home: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
   const [content, setContent] = useState<JSX.Element | null>(null);
   const [loadingToken, setLoadingToken] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const handleGetToken = async () => {
     setLoadingToken(true);
@@ -58,70 +60,48 @@ const Home: React.FC = () => {
   const roles = user && user['https://my-app.com/roles'];
   const isAdmin = roles?.includes('Admin');
 
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  const handleMenuClick = (element: JSX.Element | null) => {
+    setContent(element);
+    setMenuOpen(false);
+  };
+
   return (
     <div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'auto 1fr auto',
-          alignItems: 'center',
-          gap: '2rem',
-          padding: '1rem 2rem',
-          borderBottom: '1px solid #ddd',
-        }}
-      >
+      <nav>
         <button
+          className='add-project'
           onClick={() => token && setContent(<AddProject token={token} />)}
-          style={{
-            fontSize: '1.5rem',
-            cursor: 'pointer',
-            borderRadius: '0.5rem',
-            boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-            width: "8rem",
-            height: "4rem"
-          }}
+          aria-label="Dodaj projekt"
         >
           +
         </button>
 
-        <nav
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '2rem',
-            fontSize: '1.2rem',
-            fontWeight: '500',
-          }}
+        <button
+          className="hamburger-menu"
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
         >
-          <p className="cursor-pointer" onClick={() => setContent(<MyProjects token={token} />)}>
-            Moji projekti
-          </p>
-          <p className="cursor-pointer" onClick={() => setContent(<AllProjects token={token} />)}>
-            Vsi projekti
-          </p>
+          &#9776;
+        </button>
+
+        <div className={`nav-items ${menuOpen ? 'open' : ''}`}>
+          <p onClick={() => handleMenuClick(<MyProjects token={token} />)}>Moji projekti</p>
+          <p onClick={() => handleMenuClick(<AllProjects token={token} />)}>Vsi projekti</p>
           {isAdmin && (
-            <p className="cursor-pointer" onClick={() => token && setContent(<AddUser token={token} />)}>
-              Dodaj uporabnika
-            </p>
+            <p onClick={() => token && handleMenuClick(<AddUser token={token} />)}>Dodaj uporabnika</p>
           )}
-        </nav>
+        </div>
 
         <button
+          className='logout'
           onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
-          style={{
-            backgroundColor: 'green',
-            color: 'white',
-            cursor: 'pointer',
-            border: 'none',
-            borderRadius: '0.5rem',
-            boxShadow: '0 5px 7px rgba(0, 0, 0, 0.1)',
-            width: "8rem",
-            height: "4rem"
-          }}
+          aria-label="Odjava"
         >
           {'< LOG OUT'}
         </button>
-      </div>
+      </nav>
 
       {!token ? (
         <div className="flex justify-center mt-[10rem]">
@@ -141,11 +121,12 @@ const Home: React.FC = () => {
       ) : (
         <>
           {user && (
-            <div className="text-center pt-[1rem] mt-[1rem] text-gray-700 text-lg">
-              Prijavljen si kot: <span className="font-semibold italic">{user.name}</span>
+            <div className='logged-user'>
+              <p>Prijavljen si kot:</p>
+              <span>{user.name}</span>
             </div>
           )}
-          <div className="mt-[3rem] w-[90%] justify-center flex flex-row items-center m-auto">
+          <div className="dashboard-content">
             {content}
           </div>
         </>
